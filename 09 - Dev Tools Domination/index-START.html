@@ -1,46 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console Tricks!</title>
+  </head>
+  <body>
+    <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+    <script>
+      const dogs = [{ name: "Snickers", age: 2 }, { name: "hugo", age: 8 }];
 
-  <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+      function makeGreen() {
+        const p = document.querySelector("p");
+        p.style.color = "#BADA55";
+        p.style.fontSize = "50px";
+      }
 
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
-    }
+      // Regular
+      // snippet = clg
+      console.log("Hello");
 
-    // Regular
+      // Interpolated
+      console.log("Hello I am a %s string", "wicked");
+      // Not needed as much with ES6 back ticks aka
+      const myString = "a nerd";
+      console.log(`Hello I am ${myString}`);
 
-    // Interpolated
+      // Styled
+      console.log("%c I am some dope styles", "font-size:25px; background:red");
 
-    // Styled
+      // warning!
+      // snippet = cwa
+      console.warn("OHHHH NOOOO!");
 
-    // warning!
+      // Error :|
+      // snippet = cer
+      console.error("Shit");
 
-    // Error :|
+      // Info
+      // snippet = cin
+      console.info("Crocodiles eat 3-4 people per year");
 
-    // Info
+      // Testing
+      // snippet = cas
+      const p = document.querySelector("p");
 
-    // Testing
+      console.assert(p.classList.contains("ouch"), "That is wrong");
 
-    // clearing
+      // clearing
+      // snippet = ccl
+      console.clear();
 
-    // Viewing DOM Elements
+      // Viewing DOM Elements
+      // snippet = cdi
+      console.log(p);
+      console.dir(p);
+      console.clear();
 
-    // Grouping together
+      // Grouping together
+      dogs.forEach(dog => {
+        //snippet = cgr
+        // console.group(`${dog.name}`);
+        console.groupCollapsed(`${dog.name}`);
+        console.log(`This is ${dog.name}`);
+        console.log(`${dog.name} is ${dog.age} years old`);
+        console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+        // snippet = cge
+        console.groupEnd(`${dog.name}`);
+      });
 
-    // counting
+      // counting
+      // snippet cco
+      console.count("Wes");
+      console.count("Wes");
+      console.count("Steve");
+      console.count("Wes");
+      console.count("Steve");
+      console.count("Steve");
+      console.count("Wes");
+      console.count("Wes");
+      console.count("Wes");
+      console.count("Wes");
 
-    // timing
+      // timing
+      console.time("fetching data");
+      fetch("https://api.github.com/users/wesbos")
+        .then(data => data.json())
+        .then(data => {
+          console.timeEnd("fetching data");
+          console.log(data);
+        });
 
-  </script>
-</body>
+      // table
+      // snippet = clt
+      console.table(dogs);
+    </script>
+  </body>
 </html>
