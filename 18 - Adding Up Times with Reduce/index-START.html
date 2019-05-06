@@ -182,6 +182,30 @@
     </li>
   </ul>
 <script>
+
+  const timeNodes = [...document.querySelectorAll('[data-time')];
+
+  const seconds = timeNodes.map(node => node.dataset.time).map(timeCode => {
+    const [mins, secs] = timeCode.split(":").map(parseFloat);
+    // Above is the same things doing function(str) {return parsFloat(str); } it does not
+    // make since to run a function. You can just pass it the function directly and it will
+    // call that function on every item in the array. 
+    return (mins * 60) + secs;
+    console.log(mins, secs);
+    /*
+    If map takes in an array and exports an array reduce takes in an array and returns
+    anything you want.
+    */
+  }).reduce((total, vidSeconds) => total + vidSeconds);
+  let secondsLeft = seconds;
+  const hours = Math.floor(secondsLeft / 3600); // 3600 seconds in a day
+  // use Modulos to determine the seconds left from hours conversion
+  secondsLeft = secondsLeft % 3600;
+  const mins = Math.floor(secondsLeft / 60); // 60 seconds in an hour
+  // use Mod to determine the seconds left from min conversion
+  secondsLeft = secondsLeft % 60;
+  console.log(hours, mins, secondsLeft);
+
 </script>
 </body>
 </html>
