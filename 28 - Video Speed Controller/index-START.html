@@ -1,20 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Video Speed Scrubber</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <div class="wrapper">
-    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
-    <div class="speed">
-      <div class="speed-bar">1×</div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Speed Scrubber</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- What happens with comments though -->
+    <div class="wrapper">
+      <video
+        class="flex"
+        width="765"
+        height="430"
+        src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
+        loop
+        controls
+      ></video>
+      <div class="speed">
+        <div class="speed-bar">1×</div>
+      </div>
     </div>
-  </div>
 
-<script>
-</script>
-</body>
+    <script>
+      const speed = document.querySelector('.speed');
+      const bar = speed.querySelector('.speed-bar');
+      const video = document.querySelector('.flex');
+
+      /*
+        Add the mouse move listener to the bar to log the location of the mouse.
+        Used a proper function here because this needs to be equal to the speed bar.
+      */
+      speed.addEventListener('mousemove', function(e) {
+        /*
+          This is done because we can not assume that the bar is always going be
+          at the top. It could have a padding,margin or another element between.
+        */
+        const y = e.pageY - this.offsetTop;
+        /*
+          To get the percent we divide our new value of y by the height of the
+          element that we get by using the offsetHeight
+        */
+
+        const percent = y / this.offsetHeight;
+
+        const min = 0.4;
+        const max = 4;
+        /*
+          To get a 100 base percent we used Math.round and multiplied by 100
+        */
+        const height = Math.round(percent * 100) + '%';
+        /*
+          To get the number between 0.4 and 4 based off of 100
+        */
+        const playbackRate = percent * (max - min) + min;
+        bar.style.height = height;
+        /*
+          Using the toFixed method here gives us the value rounded to the second
+          decimal
+        */
+        bar.innerHTML = playbackRate.toFixed(2) + 'x';
+        video.playbackRate = playbackRate;
+      });
+    </script>
+  </body>
 </html>
