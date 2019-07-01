@@ -1,48 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Understanding JavaScript's Capture</title>
-</head>
-<body class="bod">
-
-  <div class="one">
-    <div class="two">
-      <div class="three">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding JavaScript's Capture</title>
+  </head>
+  <body class="bod">
+    <div class="one">
+      <div class="two">
+        <div class="three"></div>
       </div>
     </div>
-  </div>
 
-<style>
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
-  }
+    <style>
+      html {
+        box-sizing: border-box;
+      }
 
-  div {
-    width: 100%;
-    padding: 100px;
-  }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
 
-  .one {
-    background: thistle;
-  }
+      div {
+        width: 100%;
+        padding: 100px;
+      }
 
-  .two {
-    background: mistyrose;
-  }
+      .one {
+        background: thistle;
+      }
 
-  .three {
-    background: coral;
-  }
-</style>
+      .two {
+        background: mistyrose;
+      }
 
-<button></button>
-<script>
+      .three {
+        background: coral;
+      }
+    </style>
 
-</script>
-</body>
+    <button></button>
+    <script>
+      const divs = document.querySelectorAll('div');
+      const button = document.querySelector('button');
+
+      function logText(e) {
+        console.log(this.classList.value);
+        // stopPropagation still stop bubbling this event up
+        // e.stopPropagation();
+        // console.log(this);
+      }
+
+      // document.body.addEventListener('click', logText);
+
+      // Runs logText function on the bubble up
+      // divs.forEach(div => div.addEventListener('click', logText));
+
+      // Runs logText function on the capture down (capture is set to false by default)
+      divs.forEach(div =>
+        div.addEventListener('click', logText, {
+          capture: false,
+          // once unbinds itself, same thing as div.removeEventListener('click', logText)
+          // In short listents for a click once then unbinds itself so there are no future clicks
+          // Use case - Cart checkout where you don't want the user to submit more than once
+          once: true
+        })
+      );
+
+      button.addEventListener(
+        'click',
+        () => {
+          console.log('Click!!!');
+        },
+        {
+          once: true
+        }
+      );
+    </script>
+  </body>
 </html>
